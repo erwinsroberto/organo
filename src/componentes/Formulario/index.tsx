@@ -3,9 +3,14 @@ import CampoTexto from '../CampoTexto';
 import ListaSuspensa from '../ListaSuspensa';
 import Botao from '../Botao';
 import { useState } from 'react'
+import { IColaborador } from '../compartilhado/interfaces/IColaborador';
 
+interface FormularioProps {
+    aoColaboradorCadastrado: (coalborador:IColaborador) => void
+    times: string[]
+}
 
-const Formulario = (props) => {
+const Formulario = (props:FormularioProps) => {
 
 
     const [nome, setNome] = useState('')
@@ -14,7 +19,7 @@ const Formulario = (props) => {
     const [time, setTime] = useState('')
 
 
-    const aoSalvar = (evento) => {
+    const aoSalvar = (evento: React.FormEvent<HTMLFormElement>) => {
         evento.preventDefault()
         props.aoColaboradorCadastrado({
             nome,
@@ -46,6 +51,7 @@ const Formulario = (props) => {
                     aoAlterado={valor => setCargo(valor)}></CampoTexto>
 
                 <CampoTexto 
+                    obrigatorio={false}
                     label="Imagem" 
                     placeholder="Digite o endereço da imagem"
                     valor={imagem}
@@ -53,7 +59,8 @@ const Formulario = (props) => {
 
                 <ListaSuspensa  
                     obrigatorio = {true} 
-                    label="Time" itens={props.times}
+                    label="Time" 
+                    itens={props.times}
                     valor={time}
                     aoAlterado={valor => setTime(valor)}></ListaSuspensa>
                 <Botao>
